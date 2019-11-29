@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from matplotlib import pyplot as plt
 import numpy as np
-import scipy as s
 
 n = 255
 x = np.array([0.2]*n)
