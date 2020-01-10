@@ -23,31 +23,21 @@ def cmp(obj1, obj2):
 def PositiveHouseHolder(A,e):
 
     alpha = -cmp(A[0][0],0) * norm(A)
-    pprint(A)
-    print("\n")
-    print(alpha)
-    print("\n")
+    #print(alpha)
     e[0][0] = alpha
-    #pprint(A)
-    pprint(e)
     
-    #print(e)
     u = A + e
-    pprint(u)
-    print("\n")
 
     norm_u = norm(u)
-    #pprint(norm_u)
     v = 2/norm_u**2
     
     V = v * np.dot(u,u.transpose())
-    #pprint(V)
     H = np.subtract(I,V)
-    pprint(H)
-    print("\n")
     pprint(np.dot(H,A))
-    print("\n")
+    #print("\n")
     e[0][0] = -alpha
-    pprint(e)
+    #pprint(e)
 
+#x1 = eye(6,1)+sqrt(finfo(float).eps)+randn(6,1)
+#e1 = eye(6,1)
 #PositiveHouseHolder(x1,e1)
