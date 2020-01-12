@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from pprint import pprint # pretty print import
-import scipy as sp
+
 import scipy.linalg as sla
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
