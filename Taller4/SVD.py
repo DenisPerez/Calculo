@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 
-file = "/home/denis/Downloads/Ellapiz.jpg"
+file = "Ellapiz.jpg"
 
 Ag = mpimg.imread(file)
 dim = Ag.shape
