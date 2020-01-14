@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np # numyp import
+from numpy import finfo # Epsilon import
+from numpy import eye #Eye function import
+from numpy import sqrt #Square root import
+from numpy.random import randn #random library
+from pprint import pprint
 
 I = np.identity(6)
 #this function return the norm of a vector
@@ -18,7 +23,7 @@ def cmp(obj1, obj2):
     
 def PositiveHouseHolder(A,e):
 
-    alpha = -cmp(A[0][0],0) * norm(A)
+    alpha = np.sign(A[0][0]) * norm(A)
     e[0][0] = alpha
     
     u = A + e
@@ -31,5 +36,4 @@ def PositiveHouseHolder(A,e):
 
     e[0][0] = -alpha
 
-
-    return (H,alpha)
+    return (H,-alpha)

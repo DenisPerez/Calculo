@@ -2,6 +2,11 @@
 
 
 import numpy as np # numyp import
+from numpy import finfo # Epsilon import
+from numpy import eye #Eye function import
+from numpy import sqrt #Square root import
+from numpy.random import randn #random library
+from pprint import pprint
 
 
 # -*- coding: utf-8 -*-
@@ -22,7 +27,7 @@ def cmp(obj1, obj2):
     
 def NegativeHouseHolder(A,e):
 
-    alpha = -cmp(A[0][0],0) * norm(A)
+    alpha = np.sign(A[0][0]) * norm(A)
     e[0][0] = alpha
 
     u = A + e
@@ -38,4 +43,3 @@ def NegativeHouseHolder(A,e):
     e[0][0] = alpha
     
     return (H,alpha) #Retorno la matriz H y el alpha perteneciente a los vectores
-    

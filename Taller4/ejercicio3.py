@@ -35,4 +35,3 @@ ax = fig.add_axes([0.1,0.1,0.8,0.8])
 ax.imshow((Ak.reshape(dim[0],dim[1],3)).astype('uint8'))
 #ax.imshow(Ak)
 ax.axis('off')
-
