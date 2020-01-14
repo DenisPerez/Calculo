@@ -4,6 +4,7 @@ import scipy.linalg as sla
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
+from numpy.random import randn #random library
 
 file = "Ellapiz.jpg"
 
@@ -20,7 +21,7 @@ ax.axis('off')
 
 
 rango = np.linalg.matrix_rank(A)
-n = 20
+n = rango - np.random.randint(1, rango-2)
 Ak = np.zeros((len(U), len(V.T)))
 for k in range(n):
 
