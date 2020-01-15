@@ -29,30 +29,11 @@ def MatMatHH(A,u):
     return(A)
     #retorna la matriz A
     
-
-T = np.zeros((num_rows,num_cols-1))
-    
-w = np.array([[8.83176087e+00],
-       [8.88178420e-16],
-       [4.44089210e-16],
-       ])
-    
-T = list()
-T.append(w)
-
-w = np.array([[8.83176087e+00],
-       [8.88178420e-16],
-       [4.44089210e-16],
-       123])
-    
-T.append(w)
-np.vstack(T)
 #Matriz A
-
-pprint(y)
 
 for cont in range(len(A[0]-1)):
     x = np.array([A[cont:, cont]]).transpose()
     e1 = np.eye(len(x),1)
-    u = x + np.sign(x[0][0])*np.linalg.norm(x)*e1
+    u = x + np.sign(x[0][0])*np.linalg.norm(x)*
+
     
