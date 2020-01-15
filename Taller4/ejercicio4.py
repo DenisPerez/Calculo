@@ -29,11 +29,25 @@ def MatMatHH(A,u):
     return(A)
     #retorna la matriz A
     
+T = np.empty([num_rows,num_cols])
+
+
 #Matriz A
 
 for cont in range(len(A[0]-1)):
     x = np.array([A[cont:, cont]]).transpose()
     e1 = np.eye(len(x),1)
-    u = x + np.sign(x[0][0])*np.linalg.norm(x)*
+    u = x + np.sign(x[0][0])*np.linalg.norm(x)*e1
+
+    x1 = MatVecHH(x,u)
+    if(len(x1) != num_rows):
+        N = num_rows - len(x1)
+        for i in range(N):
+            p = np.zeros(1)
+            x1 = np.append(x1,p)
+        x1 = np.reshape(x1,(num_cols,1))
+        x1 = x1[::-1]
+    
+    T[:,cont:cont+1] = x1
 
     
