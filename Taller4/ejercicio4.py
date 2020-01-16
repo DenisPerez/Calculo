@@ -51,5 +51,6 @@ for cont in range(num_cols-1):
         u = u[::-1]
     
     T[:,cont:cont+1] = u
+    break
 
     
