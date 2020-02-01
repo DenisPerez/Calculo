@@ -2,7 +2,7 @@
 
 import scipy as sp
 import scipy.linalg as sla
-from ejercicio3_MatrizSPD import ASPD as SPD
+
 import numpy as np
 
 
@@ -22,24 +22,12 @@ def Jacobi(A,x,b,tol,maxiter):
         x = x_new
     return x_new,k,r
 
-"""
-n = 5
-b = np.array([[1]*n]).transpose()
-b1 = np.array([[1]*n], dtype = float).transpose()
-x = np.array([[0]*n]).transpose()
-x1 = np.array([[0]*n]).transpose()
-max_iteraciones = 500
-A = SPD(n)
-tol = 0.0001
-
-solucion1, pasos, residual1 = Jacobi(A,x,b,tol,max_iteraciones)
-solucion1, pasos, residual1 = Jacobi(A,x,b,tol,max_iteraciones)
-A = np.array([[10., -1., 2., 0.],
-              [-1., 11., -1., 3.],
-              [2., -1., 10., -1.],
-              [0.0, 3., -1., 8.]])
-b = np.array([6., 25., -11., 15.])
-
+A = np.array([[2.2542 ,   0.202523  ,  -0.834092   , 0.227431],
+[0.202523 ,   3.74738 ,   -0.0865564  ,  -0.618917],
+[-0.834092  ,  -0.0865564   , 1.56507 ,   -0.271188],
+[0.227431 ,   -0.618917   , -0.271188  ,  2.43336]])
+b = np.array([1.,]*4).reshape(4,1)
 x = np.zeros_like(b)
-solucion1, pasos, residual1 = Jacobi(A,x,b,tol,max_iteraciones)
-"""
+tol = 0.001
+maxiter = 500
+sol2, pas2, r2 = Jacobi(A,x,b,tol,maxiter)

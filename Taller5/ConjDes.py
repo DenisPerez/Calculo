@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 31 14:09:36 2019
-
-@author: gata
-"""
 
 import scipy as sp
 import scipy.linalg as sla
 import numpy as np
 from ejercicio3_MatrizSPD import ASPD as SPD
-
-def GaussSeidel(A,x,b,tol,maxiter):
-    n=len(b)
+def MinDes(A,xk,b,tol,maxiter):
     r=[0.0 for i in range(maxiter+1)]
-    r[0] = sla.norm(b-sp.dot(A,x))
+
+    pk = b-sp.dot(A,xk) #r
+    u = pk #p
+    r[0] = sla.norm(pk) #r_k_norm
     for k in range(maxiter):
-        for i in range(n):
-            s1=0.0
-            for j in range(n):
-                if i != j:
-                    s1 = s1 + A[i][j]*x[j]                    
-            x[i] =(b[i] -s1)/A[i][i]
-        r[k+1] = sla.norm(b - sp.dot(A,x))
-        if r[k+1]<tol:
+       wk = sp.dot(A,u) #Ap
+       tk = (sla.norm(pk)**2)/sp.dot(sp.transpose(u),wk) #alpha
+       xk = xk + tk*u
+       pk_plus1 = pk - tk*wk
+       r[k+1] = sla.norm(pk_plus1)
+       beta = (sla.norm(pk_plus1)**2) / (sla.norm(pk)**2)
+       u = pk_plus1 + beta * u
+       pk = pk_plus1
+       if r[k+1]<tol:
             break
-    return x,k,r
+    return xk,k,r
 
 A = np.array([[2.2542 ,   0.202523  ,  -0.834092   , 0.227431],
 [0.202523 ,   3.74738 ,   -0.0865564  ,  -0.618917],
@@ -34,4 +31,4 @@ b = np.array([1.,]*4).reshape(4,1)
 x = np.zeros_like(b)
 tol = 0.001
 maxiter = 500
-sol,pa,r = GaussSeidel(A,x,b,tol,maxiter)
+sol13,pa13,r13 = MinDes(A,x,b,tol,maxiter)
