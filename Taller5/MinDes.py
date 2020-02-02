@@ -22,7 +22,7 @@ def MinDes(A,xk,b,tol,maxiter):
        if r[k+1]<tol:
             break
     return xk,k,r
-
+"""
 A = np.array([[2.2542 ,   0.202523  ,  -0.834092   , 0.227431],
 [0.202523 ,   3.74738 ,   -0.0865564  ,  -0.618917],
 [-0.834092  ,  -0.0865564   , 1.56507 ,   -0.271188],
@@ -32,3 +32,4 @@ x = np.zeros_like(b)
 tol = 0.001
 maxiter = 500
 sol1,pa1,r1 = MinDes(A,x,b,tol,maxiter)
+"""

@@ -4,7 +4,7 @@ import scipy as sp
 import scipy.linalg as sla
 import numpy as np
 from ejercicio3_MatrizSPD import ASPD as SPD
-def MinDes(A,xk,b,tol,maxiter):
+def ConjDes(A,xk,b,tol,maxiter):
     r=[0.0 for i in range(maxiter+1)]
 
     pk = b-sp.dot(A,xk) #r
@@ -22,7 +22,7 @@ def MinDes(A,xk,b,tol,maxiter):
        if r[k+1]<tol:
             break
     return xk,k,r
-
+"""
 A = np.array([[2.2542 ,   0.202523  ,  -0.834092   , 0.227431],
 [0.202523 ,   3.74738 ,   -0.0865564  ,  -0.618917],
 [-0.834092  ,  -0.0865564   , 1.56507 ,   -0.271188],
@@ -31,4 +31,5 @@ b = np.array([1.,]*4).reshape(4,1)
 x = np.zeros_like(b)
 tol = 0.001
 maxiter = 500
-sol13,pa13,r13 = MinDes(A,x,b,tol,maxiter)
+sol13,pa13,r13 = ConjDes(A,x,b,tol,maxiter)
+"""
