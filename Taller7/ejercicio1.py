@@ -38,9 +38,15 @@ def xCholesky(e):
 
 def xHouseholder(e):
     
+    
+    
+    
     return x
 
 def xGramSchmidt(e):
+    
+    
+    
     
     return x
     
