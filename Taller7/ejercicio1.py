@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.linalg as sla
 from pprint import pprint
+from GS import gs
 
 def createA(e):
     A = np.zeros((4,3))
@@ -16,7 +17,7 @@ def createAtA(e):
 def createb(e):
     b = np.ones((4,1))
     b[0] = 3
-    b[1:4] = [e, e, e]
+    b[1:4] = e
     return b
 
 def createAtb(e):
@@ -36,17 +37,23 @@ def xCholesky(e):
     x = sla.solve(L@L.T, createAtb(e))
     return x
 
+"""
 def xHouseholder(e):
     
     
     
     
     return x
+"""
 
-def xGramSchmidt(e):
+def xGramSchmidt(MatrixA, vectorb):
     
+    Q,R = gs(MatrixA)
     
+    #R @ x = Q.T @ vectorb
     
+    Qtb = Q.T @ vectorb
+    x = sla.solve(R, Qtb)
     
     return x
     
@@ -59,11 +66,15 @@ e = 1
 
 A = createA(e)
 b = createb(e)
+"""
+AtA = A.T @ A
+Atb = A.T @ b
+"""
 xc = xCholesky(e)
-xh = xHouseholder(e)
-xg = xGramSchmidt(e)
+#xh = xHouseholder(e)
+xg = xGramSchmidt(createAtA(e),createAtb(e))
 
-cond = np.linalg.cond(A, p='fro')
+cond = np.linalg.cond(A.T @ A, p='fro')
 rc = np.linalg.norm(b - A@xc, 2)
 ec = np.linalg.norm(x_star - xc, 2)
 rh = np.linalg.norm(b - A@xh, 2)
