@@ -4,11 +4,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 from scipy import optimize
-
-C = lambda h1,h2,p1,p2,s,x : (p1*h1/np.math.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
-f1 = lambda h1,h2,p1,p2,s,x : (p1*h1/np.math.sqrt((h1**2 + x**2)**3))
-f2 = lambda h1,h2,p1,p2,s,x : (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
-derC = lambda h1,h2,p1,p2,s,x : -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
+from scipy.optimize import fsolve
 
 #Constant values
 h1 = 5
@@ -16,6 +12,17 @@ h2 = 6
 p1 = 1000
 p2 = 2000
 s = 10
+
+def Cx (x):
+    return -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
+
+
+C = lambda h1,h2,p1,p2,s,x : (p1*h1/np.math.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
+f1 = lambda h1,h2,p1,p2,s,x : (p1*h1/np.math.sqrt((h1**2 + x**2)**3))
+f2 = lambda h1,h2,p1,p2,s,x : (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
+derC = lambda h1,h2,p1,p2,s,x : -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
+
+
 
 #Distantce in X
 x = np.arange(0,11,1) 
@@ -32,6 +39,12 @@ plt.plot(x,y1,'o-')
 plt.plot(x,y2,'--')
 plt.plot(x,c,'--o')
 plt.plot(x,dc,'*-')
+
+x_eq_aprox = (10-0)/2.0
+x_max_aprox = (10)
+
+starting_guess = 4
+x_eq = fsolve(Cx, x_eq_aprox)
 
 
 
