@@ -19,6 +19,7 @@ r2 = 1 + (0.75-1) * np.random.uniform(low = 0, high = 1.0 , size = 10)
 nra1 = np.concatenate([r1,r2])
 smart_spaced = np.concatenate([-nra1, nra1])
 
+plt.figure()
 
 ##equaly spaced nodes
 
@@ -26,10 +27,11 @@ y = abs(eq_spaced)
 
 f1 = lagrange(eq_spaced, y)
 
-xx1 = np.linspace(min(eq_spaced), max(eq_spaced), num = 10)
+xx1 = np.linspace(min(eq_spaced), max(eq_spaced), num = 100)
 
-plt.plot(eq_spaced,y,'ro', xx1,f1(xx1),'-')
-plt.axis([min(xx1), max(xx1), 0, 1])
+plt.subplot(221)
+plt.plot(xx1,f1(xx1), 'r')
+plt.grid(True)
 
 values = np.arange(-1,1,0.1)
 
@@ -43,12 +45,13 @@ f2 = interp1d(simetric_spaced, y2, kind = 'quadratic', fill_value = 'extrapolate
 
 xx2 = np.linspace(min(simetric_spaced), max(simetric_spaced))
 
-plt.plot(xx2,f2(xx2),'-')
-plt.axis([min(xx2), max(xx2), 0, 1])
+plt.subplot(222)
+plt.plot(xx2,f2(xx2),'b')
+plt.grid(True)
 
 values = np.arange(-1,1,0.1)
 
-e1 = abs(values) - f1(values)
+e1 = abs(values) - f2(values)
 
 ## smart_spaced
 
@@ -58,9 +61,16 @@ f3 = interp1d(smart_spaced, y3, kind = 'quadratic', fill_value = 'extrapolate')
 
 xx3 = np.linspace(min(smart_spaced), max(smart_spaced))
 
-plt.plot(xx3,f3(xx3),'-')
-plt.axis([min(xx3), max(xx3), 0, 1])
+plt.subplot(223)
+plt.plot(xx3,f3(xx3),'g')
+plt.grid(True)
 
 values = np.arange(-1,1,0.1)
 
-e1 = abs(values) - f1(values)
+e2 = abs(values) - f3(values)
+
+plt.subplot(224)
+plt.plot(values,e,'r')
+plt.plot(values,e1,'b')
+plt.plot(values,e2,'g')
+plt.grid(True)
