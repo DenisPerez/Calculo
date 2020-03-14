@@ -3,9 +3,9 @@
 import numpy as np
 
 h1 = 5
-h2 = 6
+h2 = 5
 p1 = 1000
-p2 = 2000
+p2 = 1000
 s = 10
 
 def L1 (x):
@@ -36,9 +36,7 @@ def bisection(a,b, tol):
         
     return c
 
-answer = bisection(8,9,1e-8)
-
-print("Bisection method gives root at x = ", answer)
+#answer = bisection(4,5,1e-25)
 
 def intersection(a,b, tol):
     
@@ -59,6 +57,4 @@ def intersection(a,b, tol):
         
     return c
 
-
-xeq = intersection(8,9,1e-8)
-print(xeq)
+#xeq = intersection(4,5,1e-25)
