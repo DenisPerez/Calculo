@@ -36,7 +36,6 @@ def bisection(a,b, tol):
         
     return c
 
-#answer = bisection(4,5,1e-25)
 
 def intersection(a,b, tol):
     
@@ -56,5 +55,3 @@ def intersection(a,b, tol):
                 xr = c
         
     return c
-
-#xeq = intersection(4,5,1e-25)
