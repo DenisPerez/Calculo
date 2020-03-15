@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
-
 import numpy as np
-
-h1 = 5
-h2 = 5
-p1 = 1000
-p2 = 1000
-s = 10
 
 def L1 (x):
     return (p1*h1/np.math.sqrt((h1**2 + x**2)**3))

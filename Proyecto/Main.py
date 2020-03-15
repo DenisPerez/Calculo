@@ -18,11 +18,17 @@ lower_limit1 = 2000
 upper_limit2 = 0
 lower_limit2 = 30
 
-h1 = random() * (upper_limit - lower_limit) + lower_limit
-h2 = random() * (upper_limit - lower_limit) + lower_limit
-p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-s = random() * (upper_limit2 - lower_limit2) + lower_limit2
+
+h1 =5
+h2 = 6
+p1 = 1000
+p2 = 2000
+s = 10
+#h1 = random() * (upper_limit - lower_limit) + lower_limit
+#h2 = random() * (upper_limit - lower_limit) + lower_limit
+#p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
+#p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
+#s = random() * (upper_limit2 - lower_limit2) + lower_limit2
 
 #function zone
 def L1 (x):
