@@ -7,6 +7,7 @@ from scipy.optimize import fsolve
 import random as rand
 from random import random
 from find_intervals import intervals
+import math
 
 upper_limit = 10.0
 lower_limit = 3.0
@@ -21,8 +22,7 @@ h1 = random() * (upper_limit - lower_limit) + lower_limit
 h2 = random() * (upper_limit - lower_limit) + lower_limit
 p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
 p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-#s = random() * (upper_limit2 - lower_limit2) + lower_limit2
-s = 14
+s = random() * (upper_limit2 - lower_limit2) + lower_limit2
 
 #function zone
 def L1 (x):
@@ -84,7 +84,7 @@ f2 = lambda x : (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
 derC = lambda x : -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
 
 #Distantce in X
-x = np.arange(0,15,1)
+x = np.arange(0,math.ceil(s),1)
 
 #Y values
 y1 = [f1(i) for i in x]
