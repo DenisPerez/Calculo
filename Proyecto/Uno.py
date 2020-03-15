@@ -19,16 +19,16 @@ upper_limit2 = 0
 lower_limit2 = 30
 
 
-h1 =5
-h2 = 6
-p1 = 1000
-p2 = 2000
-s = 10
-#h1 = random() * (upper_limit - lower_limit) + lower_limit
-#h2 = random() * (upper_limit - lower_limit) + lower_limit
-#p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-#p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-#s = random() * (upper_limit2 - lower_limit2) + lower_limit2
+#h1 =5
+#h2 = 5
+#p1 = 1000
+#p2 = 2000
+#s = 10
+h1 = random() * (upper_limit - lower_limit) + lower_limit
+h2 = random() * (upper_limit - lower_limit) + lower_limit
+p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
+p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
+s = random() * (upper_limit2 - lower_limit2) + lower_limit2
 
 #function zone
 def L1 (x):
@@ -87,22 +87,27 @@ def intersection(a,b, tol):
 C = lambda x : (p1*h1/np.math.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
 f1 = lambda x : (p1*h1/np.math.sqrt((h1**2 + x**2)**3))
 f2 = lambda x : (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
-derC = lambda x : -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
+derC = lambda x : ((3*h2*p2*(s-x))/((s-x)**2+h2**2)**5/2) - ((3*h1*p1*x))/(x**2+h1**2)**5/2
 
 #Distantce in X
-x = np.arange(0,math.ceil(s),1)
-
+x = np.arange(0,math.ceil(s)+1,1)
 #Y values
 y1 = [f1(i) for i in x]
 y2 = [f2(i) for i in x]
 c = [C(i) for i in x]
 dc = [derC(i) for i in x]
 
-#plot functions
-plt.plot(x,y1,'o-')
-plt.plot(x,y2,'--')
-plt.plot(x,c,'--o')
-plt.plot(x,dc,'*-')
+plt.rcParams.update({'figure.figsize': [6,5],'font.size': 18, 'font.family': 'serif'})
+
+fig = plt.figure()
+ax1 =  fig.add_axes([0.1,0.1,0.8,0.8])
+ax1.grid()
+ax1.plot(c,'g-o',label='$C(x)$')
+ax1.plot(y1,'bo--',label='$L{1}(x)$')
+ax1.plot(y2,'y--*',label='$L_{2}(x)$')
+ax1.set_xlabel('')
+ax1.set_ylabel('Vatios')
+ax1.legend(loc=0)
 
 #set intervals 
 intervalos_aprox = intervals(dc)
@@ -111,6 +116,8 @@ minimum_point = []
 intervalos = []
 values = []
 
+
+
 #Esta funcion diferencia entre maximos y minimos
 #Luego separa solo los intervalos de interes
 for i in range (len(intervalos_aprox)):
@@ -118,13 +125,12 @@ for i in range (len(intervalos_aprox)):
     xr = intervalos_aprox[i][1]
     mid_point = (xr+xl)/2
     
-    cl = Cx(mid_point-0.5)
-    cr = Cx(mid_point+1)
+    cl = Cx(mid_point-2)
+    cr = Cx(mid_point+2)
     
     if cl < 0 and cr > 0 :
         minimum_point.append(mid_point)
         intervalos.append(intervalos_aprox[i])
-        
     else:
         if cl > 0 and cr < 0:
             maximun_point.append(mid_point)
@@ -142,8 +148,27 @@ for i in range (len(intervalos_aprox)):
 
 #set aprox values
 intervalos.append(values[0])
-x_min_aprox = min(minimum_point)
-
+if (len(intervalos) == 1):
+    x_max = bisection(intervalos[0][0], intervalos[0][1], 1e-20)
+    if C(rand.uniform(0,1)) > C(rand.uniform(s-2,s)) :
+        x_min_aprox = s - rand.uniform(0,1)
+        x_min = s
+    else:
+        x_min_aprox = 0 + rand.uniform(0,1)
+        x_min = 0 + rand.uniform(0,1)
+else:
+    #bisection en los intervalos de interes
+    x_min_approx = min(minimum_point)
+    x_min = bisection(intervalos[0][0], intervalos[0][1], 1e-20)
+    x_max = bisection(intervalos[1][0], intervalos[1][1], 1e-20)
+    ra = rand.uniform(0,1)
+    rt = C(x_min)
+    if (C(ra) < rt):
+        x_min = ra
+    else:
+        if (C(s) < rt):
+            x_min = s
+    
 #@comprobamos si hay interseccion
 intersectionFlag = False
 if ((f2(0) >= f1(0) and f2(s) <= f1(s)) or (f1(0) >= f2(0) and f1(s) <= f2(s))):
@@ -151,11 +176,8 @@ if ((f2(0) >= f1(0) and f2(s) <= f1(s)) or (f1(0) >= f2(0) and f1(s) <= f2(s))):
     
 #si hay interseccion
 if intersectionFlag:
-    x_eq_aprox = x_min_aprox + rand.choice([-1,1])
+    x_eq_aprox = x_min_aprox + rand.uniform(-1,1)
     x_eq = intersection(0, s, 1e-15)
 
-#bisection en los intervalos de interes
-x_min = bisection(intervalos[0][0], intervalos[0][1], 1e-15)
-x_max = bisection(intervalos[1][0], intervalos[1][1], 1e-15)
 
 
