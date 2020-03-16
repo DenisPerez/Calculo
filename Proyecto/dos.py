@@ -17,8 +17,8 @@ import sys
 h1 =5
 p1 = 1000
 p2 = 2000
-s = 10
-hh2 = np.arange(3,10.1,0.7)
+s = 30
+hh2 = np.linspace(3.0,10.0,num=30)
 ra1 = rand.uniform(0,1)
 ra2 = rand.uniform(s-1,s)
 
@@ -26,7 +26,7 @@ C = lambda x,h2 : (p1*h1/np.math.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.math.sqrt(
 
 derC = lambda x,h2 : -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
 
-x = np.arange(0,11,1)
+x = np.linspace(0,s,num = 30)
 
 def L1 (x):
     return (p1*h1/np.sqrt((h1**2 + x**2)**3))
@@ -69,12 +69,13 @@ def minimun_interval(intervalos_aprox,h2):
     for i in range (len(intervalos_aprox)):
         xl = intervalos_aprox[i][0]
         xr = intervalos_aprox[i][1]
-        mid_point = (xr+xl)/2
+
         
-        cl = derCx(mid_point-2,h2)
-        cr = derCx(mid_point+2,h2)
+        cl = derCx(xl,h2)
+        cr = derCx(xr+1,h2)
         
         if cl < 0 and cr > 0 :
+            print("Minimun at", intervalos_aprox[i])
             intervalos.append(intervalos_aprox[i])
     return (intervalos)
 
@@ -89,7 +90,8 @@ for i in range (len(hh2)):
     minimun_intervalos = minimun_interval(intervalos_aproximados,hh2[i])
 
     if (len(minimun_intervalos) != 0 ):
-        x_min_array.append(bisection(minimun_intervalos[0][0],minimun_intervalos[0][1], 1e-20, hh2[i]))
+        x_min_temp = bisection(minimun_intervalos[0][0],minimun_intervalos[0][1], 1e-20, hh2[i])
+        x_min_array.append(x_min_temp)
     else:
         if C(rand.uniform(0,1),hh2[i]) > C(rand.uniform(s-2,s),hh2[i]) :
             x_min_array.append(s)
@@ -99,11 +101,12 @@ for i in range (len(hh2)):
 C2 = lambda x, h2 : (p1*h1/np.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.sqrt(h2**2+(s-x)**2)**3)
 
 
-fig = plt.figure()
 
+fig = plt.figure()
 ax = fig.gca(projection='3d')
 plt.plot(x_min_array, hh2, Cx(x, hh2), marker='*', linestyle='')
 x = np.arange(0, s, 0.1)
+
 h2 = np.arange(3, 10, 0.1)
 
 #x, hh2 = np.meshgrid(x, hh2)

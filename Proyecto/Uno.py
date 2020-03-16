@@ -20,10 +20,10 @@ lower_limit2 = 30
 
 
 h1 = 5
-h2 = 7.9
+h2 = 10
 p1 = 1000
 p2 = 2000
-s = 10
+s = 30
 #h1 = random() * (upper_limit - lower_limit) + lower_limit
 #h2 = random() * (upper_limit - lower_limit) + lower_limit
 #p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
@@ -90,7 +90,8 @@ f2 = lambda x : (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
 derC = lambda x : ((3*h2*p2*(s-x))/((s-x)**2+h2**2)**5/2) - ((3*h1*p1*x))/(x**2+h1**2)**5/2
 
 #Distantce in X
-x = np.arange(0,math.ceil(s)+1,1)
+#x = np.arange(0,math.ceil(s)+1,1)
+x = np.linspace(0,s,num = s)
 #Y values
 y1 = [f1(i) for i in x]
 y2 = [f2(i) for i in x]
