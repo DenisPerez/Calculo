@@ -13,12 +13,11 @@ from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import sys
 
 
-
 h1 =5
 p1 = 1000
 p2 = 2000
-s = 30
-hh2 = np.linspace(3.0,10.0,num=30)
+s = 28
+hh2 = np.linspace(3.0,10.0,num=s)
 ra1 = rand.uniform(0,1)
 ra2 = rand.uniform(s-1,s)
 
@@ -26,7 +25,7 @@ C = lambda x,h2 : (p1*h1/np.math.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.math.sqrt(
 
 derC = lambda x,h2 : -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
 
-x = np.linspace(0,s,num = 30)
+x = np.linspace(0,s,num = s)
 
 def L1 (x):
     return (p1*h1/np.sqrt((h1**2 + x**2)**3))
@@ -75,7 +74,6 @@ def minimun_interval(intervalos_aprox,h2):
         cr = derCx(xr+1,h2)
         
         if cl < 0 and cr > 0 :
-            print("Minimun at", intervalos_aprox[i])
             intervalos.append(intervalos_aprox[i])
     return (intervalos)
 
@@ -100,14 +98,25 @@ for i in range (len(hh2)):
             
 C2 = lambda x, h2 : (p1*h1/np.sqrt((h1**2 + x**2)**3)) + (p2*h2/np.sqrt(h2**2+(s-x)**2)**3)
 
+c = []
+for h in hh2:
+    for xs in x:
+      c.append(Cx(xs,h))
+     
+fig = plt.figure()
+ax1 =  fig.add_axes([0.1,0.1,0.8,0.8])
+plt.plot(hh2,x_min_array,'k*',linewidth=2)
+ax1.set_xlabel('Altura 2do bombillo (h2)')
+ax1.set_ylabel('Ubicacion del pto de peor iluminacion (x)')
 
+#Grafica 3d
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 plt.plot(x_min_array, hh2, Cx(x, hh2), marker='*', linestyle='')
-x = np.arange(0, s, 0.1)
+x = np.linspace(0, s, num = math.ceil(s))
 
-h2 = np.arange(3, 10, 0.1)
+h2 = np.linspace(3.0, 10.0, num = math.ceil(s))
 
 #x, hh2 = np.meshgrid(x, hh2)
 #ax.plot_surface(x, hh2, C2(x, hh2), rstride=1, cstride=1, cmap=plt.cm.coolwarm)
@@ -117,5 +126,32 @@ x, h2 = np.meshgrid(x, h2)
 z = C2(x,h2)
 ax.plot_surface(x, h2, z, rstride=1, cstride=1, cmap=plt.cm.coolwarm)
 ax.contour(x, h2, z, zdir='z', offset=0, cmap=plt.cm.coolwarm)
+
+plt.show()
+
+#Grafica 3d con zoom en los minimos
+
+fig2 = plt.figure()
+ax2 = fig2.gca(projection='3d')
+x = np.linspace(0, s, num = math.ceil(s))
+hh2 = np.linspace(3.0,10.0,num = math.ceil(s))
+
+#plt.plot(x_min_array, hh2, Cx(x, hh2), marker='*', linestyle='')
+x_ = np.linspace(x_min_array[0]-2, x_min_array[0]+2, num = math.ceil(s))
+h2_ = np.linspace(3.0, 10.0, num = math.ceil(s))
+
+x_, h2_ = np.meshgrid(x_, h2_)
+z_ = C2(x_,h2_)
+zz = []
+for i in range(len(x_min_array)):
+    z = Cx(x_min_array[i], hh2[i])
+    zz.append(z)
+    ax2.scatter3D(x_min_array[i], hh2[i], z, c = 'k')
+    
+    
+#ax2.plot3D(x_min_array, hh2, zz, 'k-')
+ax2.plot_surface(x_, h2_, z_, rstride=1, cstride=1, cmap=plt.cm.coolwarm)
+ax2.contour(x_, h2, z_, zdir='z', offset=0, cmap=plt.cm.coolwarm)
+ax2.view_init(elev = 20, azim = -50)
 
 plt.show()
