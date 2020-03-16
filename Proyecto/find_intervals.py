@@ -9,11 +9,11 @@ def intervals(dc):
     for i in range(1,len(dc)):
         if(flag == 1):
             if(dc[i] >= 0):
-                intervals.append([i-1,i])
+                intervals.append([i-2,i])
                 flag = 0
         else:
             if(dc[i] <= 0):
-                intervals.append([i-1,i])
+                intervals.append([i-2,i])
                 flag = 1
     
     return(intervals)

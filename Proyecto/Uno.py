@@ -19,23 +19,23 @@ upper_limit2 = 0
 lower_limit2 = 30
 
 
-#h1 =5
-#h2 = 5
-#p1 = 1000
-#p2 = 2000
-#s = 10
-h1 = random() * (upper_limit - lower_limit) + lower_limit
-h2 = random() * (upper_limit - lower_limit) + lower_limit
-p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
-s = random() * (upper_limit2 - lower_limit2) + lower_limit2
+h1 = 5
+h2 = 7.9
+p1 = 1000
+p2 = 2000
+s = 10
+#h1 = random() * (upper_limit - lower_limit) + lower_limit
+#h2 = random() * (upper_limit - lower_limit) + lower_limit
+#p1 = random() * (upper_limit1 - lower_limit1) + lower_limit1
+#p2 = random() * (upper_limit1 - lower_limit1) + lower_limit1
+#s = random() * (upper_limit2 - lower_limit2) + lower_limit2
 
 #function zone
 def L1 (x):
-    return (p1*h1/np.math.sqrt((h1**2 + x**2)**3))
+    return (p1*h1/np.sqrt((h1**2 + x**2)**3))
 
 def L2(x):
-    return (p2*h2/np.math.sqrt(h2**2+(s-x)**2)**3)
+    return (p2*h2/np.sqrt(h2**2+(s-x)**2)**3)
 
 def Cx (x):
     return -((3*p1*h1*x*(x**2+h1**2)**2)/((h1**2+x**2)**3)**(3/2)) + ( (3*h2*p2*((-x+s)**2 + h2**2)**2 * (-x+s)) / ((h2**2 + (s-x)**2)**3)**(3/2))
@@ -67,7 +67,7 @@ def intersection(a,b, tol):
     
     while (np.abs(xl-xr) >= tol):
         
-        c = (xl+xr)/2.0
+        c = (xr+xl)/2.0
         minus = L1(xl) - L2(c)
         
         if minus > tol:
@@ -99,12 +99,14 @@ dc = [derC(i) for i in x]
 
 plt.rcParams.update({'figure.figsize': [6,5],'font.size': 18, 'font.family': 'serif'})
 
+
 fig = plt.figure()
 ax1 =  fig.add_axes([0.1,0.1,0.8,0.8])
 ax1.grid()
 ax1.plot(c,'g-o',label='$C(x)$')
-ax1.plot(y1,'bo--',label='$L{1}(x)$')
+ax1.plot(y1,'bo--',label='$L_{1}(x)$')
 ax1.plot(y2,'y--*',label='$L_{2}(x)$')
+#ax1.plot(dc,'r-*',label='$C(x)$')
 ax1.set_xlabel('')
 ax1.set_ylabel('Vatios')
 ax1.legend(loc=0)
@@ -151,10 +153,10 @@ intervalos.append(values[0])
 if (len(intervalos) == 1):
     x_max = bisection(intervalos[0][0], intervalos[0][1], 1e-20)
     if C(rand.uniform(0,1)) > C(rand.uniform(s-2,s)) :
-        x_min_aprox = s - rand.uniform(0,1)
+        x_min_approx = s - rand.uniform(0,1)
         x_min = s
     else:
-        x_min_aprox = 0 + rand.uniform(0,1)
+        x_min_approx = 0 + rand.uniform(0,1)
         x_min = 0 + rand.uniform(0,1)
 else:
     #bisection en los intervalos de interes
@@ -176,8 +178,5 @@ if ((f2(0) >= f1(0) and f2(s) <= f1(s)) or (f1(0) >= f2(0) and f1(s) <= f2(s))):
     
 #si hay interseccion
 if intersectionFlag:
-    x_eq_aprox = x_min_aprox + rand.uniform(-1,1)
-    x_eq = intersection(0, s, 1e-15)
-
-
-
+    x_eq_aprox = x_min_approx + rand.uniform(-1,1)
+    x_eq = intersection(0, math.ceil(s/2), 1e-20)
