@@ -41,6 +41,27 @@ def derCx(x,h2):
 
 #def matrixC(X,Y):
     
+def derparcialCx(x,h2):
+    return (3*h2*p2*(s-x))/((s-x)**2 + h2**2)**(5/2)
+
+def derparcialCh2(x,h2):
+    return -(3*h1*p1*x)/((x**2+h1**2)**(5/2))
+    
+def gradienteC(x,h2):
+    return [derparcialCx(x,h2), derparcialCh2(x,h2)]
+    
+
+def derparcialCxx(x,h2):
+    return -((3*h1*p1)/(x**2+h1**2)**(5/2))  + ((15*h1*p1*x**2)/(x**2+h1**2)**(7/2)) + ((15*h2*p2*(s-x)**2)/(((s-x)**2)+h2**2)**(7/2)) -((3*h2*p2)/(((s-x)**2) + h2**2)**(5/2))
+    
+def derparcialCh2h2(x,h2):
+    return ((3*h2*p2*(2*(h2**2) - 3*(x**2) + 6*s*x - 3*(s**2) ))/(h2**2 + (s-x)**2)**(7/2))
+    
+def derparcialCxh2(x,h2):
+    return ((3*p2*(x-s)*(4*h2**2 - x**2 + 2*s*x - s**2))/(h2**2 + (s-x)**2)**(7/2))
+
+def HessianaC(x,h2):
+    return [[derparcialCxx(x,h2), derparcialCxh2(x,h2) ],[ derparcialCxh2(x,h2) , derparcialCh2h2(x,h2)]]
 
 def bisection(a,b, tol,h2):
     
